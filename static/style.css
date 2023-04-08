@@ -1,0 +1,8 @@
+.alert {
+    padding: 15px;
+    border: 1px solid #cacaca;
+    border-radius: 4px;
+    color: #000000;
+    background-color: #cacaca;
+    width: fit-content;
+}

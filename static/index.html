@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>websocket</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <input type="text" id="msg">
+    <input type="submit" value="enter" onclick="hello()">
+
+    <script>
+        let socket = new WebSocket("ws://localhost:8080/ws");
+        console.log("WebSocket connection");
+
+        socket.onopen = () => {
+            console.log("conn...");
+            // socket.send("hello from the client");
+        };
+
+        socket.onmessage = (msg) => {
+            console.log(msg.data);
+
+            let div = document.createElement("div");
+
+            div.className = "alert";
+            div.innerHTML = msg.data;
+
+            document.body.after(div);
+        };
+
+        socket.onclose = (event) => {
+            console.log("Socket closed: ", event);
+        };
+
+        socket.onerror = (error) => {
+            console.log("socket error: ", error);
+        };
+
+        function hello() {
+            var msg = document.getElementById("msg");
+            socket.send(msg.value);
+            msg.value = "";
+        }
+
+        var input = document.querySelector('input[type="text"]');
+
+        input.addEventListener("keypress", function (e) {
+            // если пользователь нажал на Enter, выполняем нужный код
+            // e.preventDefault() для того чтобы отключить действие браузера по умолчанию (обычно это отправка формы).
+            if (e.which === 13) {
+                e.preventDefault();
+                hello();
+            }
+        });
+
+
+    </script>
+</body>
+
+</html>
